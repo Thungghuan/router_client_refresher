@@ -1,0 +1,8 @@
+{
+  "routerHost": "http://192.168.1.1",
+  "routerAdmin": {
+    "luci_username": "",
+    "luci_password": ""
+  },
+  "applyData": {}
+}
