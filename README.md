@@ -14,5 +14,5 @@ $ python3 main.py
 
 ```shell
 $ docker build -t thungghuan/router_client_refresher .
-$ docker run -t -e LUCI_PWD=<password> thungghuan/router_client_refresher
+$ docker run -d -e LUCI_PWD=<password> thungghuan/router_client_refresher
 ```
