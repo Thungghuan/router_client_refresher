@@ -48,13 +48,21 @@ def refresh():
 
 
 def testNetwork():
-    r = requests.get('http://www.baidu.com', timeout=5)
-    print(r)
     global hasNetwork
-    if r.status_code == 200:
-        hasNetwork = True
-    else:
+    try:
+        r = requests.get('http://www.baidu.com', timeout=5)
+        print(r)
+        if r.status_code == 200:
+            hasNetwork = True
+        else:
+            hasNetwork = False
+    except:
         hasNetwork = False
+    
+    if hasNetwork:
+        print('Have network connection now.')
+    else:
+        print("Don't have network connection now.")
 
 
 def main():
