@@ -2,6 +2,7 @@ import requests
 import os
 import schedule
 import time
+import re
 
 hasNetwork = False
 
@@ -51,9 +52,12 @@ def testNetwork():
     global hasNetwork
     try:
         r = requests.get('http://www.baidu.com', timeout=5)
-        print(r)
+        print(r.text)
         if r.status_code == 200:
-            hasNetwork = True
+            if re.match(r'[\s\S]*?Authentication', r.text) is not None:
+                hasNetwork = False
+            else:
+                hasNetwork = True
         else:
             hasNetwork = False
     except:
@@ -67,16 +71,17 @@ def testNetwork():
 
 def main():
     print("Refresh server started.")
+    testNetwork()
 
-    # 每天3点检查当晚是否断网
-    schedule.every().day.at("03:00").do(testNetwork)
+    # # 每天3点检查当晚是否断网
+    # schedule.every().day.at("03:00").do(testNetwork)
 
-    # 每天6点15进行配置更新
-    schedule.every().day.at("06:15").do(refresh)
+    # # 每天6点15进行配置更新
+    # schedule.every().day.at("06:15").do(refresh)
 
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+    # while True:
+    #     schedule.run_pending()
+    #     time.sleep(1)
 
 
 if __name__ == "__main__":
